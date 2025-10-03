@@ -1,0 +1,177 @@
+/* Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Georgia, serif;
+  background: #fff;
+  color: #111;
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #ddd;
+}
+
+header .logo {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+header nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+header nav a {
+  text-decoration: none;
+  color: #111;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+#dark-mode {
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s;
+}
+
+#dark-mode:hover {
+  background: #0077cc;
+}
+
+/* Container */
+.container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Featured Article */
+.featured img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.featured h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.featured p {
+  font-family: Arial, sans-serif;
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+.featured a {
+  color: #0077cc;
+  text-decoration: none;
+}
+
+.featured a:hover {
+  text-decoration: underline;
+}
+
+/* Articles Grid */
+.articles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.articles img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.articles h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.articles p {
+  font-family: Arial, sans-serif;
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+.articles a {
+  color: #0077cc;
+  font-size: 0.9rem;
+}
+
+.articles a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 3rem;
+  font-family: Arial, sans-serif;
+  color: #555;
+  border-top: 1px solid #ddd;
+}
+
+/* Dark Mode */
+body.dark {
+  background-color: #111;
+  color: #eee;
+}
+
+body.dark a {
+  color: #66aaff;
+}
+
+body.dark header {
+  background-color: #222;
+  border-bottom: 1px solid #444;
+  color: #fff;
+}
+
+body.dark footer {
+  background-color: #222;
+  border-top: 1px solid #444;
+  color: #ccc;
+}
+
+body.dark #dark-mode {
+  background-color: #555;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  header nav {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}
