@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FineMagazi</title>
+  <title>FineMagazi - Your Daily Financial Insight</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Header -->
   <header>
     <div class="logo">FineMagazi</div>
     <nav>
@@ -17,56 +16,69 @@
       <a href="#">Investing</a>
       <a href="#">Economy</a>
       <a href="#">Crypto</a>
-      <a href="#">Contact</a>
     </nav>
     <button id="dark-mode">🌙 Dark Mode</button>
   </header>
 
-  <!-- Main Container -->
   <main class="container">
 
-    <!-- Featured Article -->
-    <section class="featured">
+    <section class="hero-section">
       <article>
-        <img src="img/donald-trump-1.png" alt="Stock Market">
-        <h2>The U.S. Economy Under Donald Trump in 2025</h2>
-        <p>In a phrase, Trump will face a tougher and more complex economic conundrum than before ...</p>
-        <a href="posts/sample.html">Read More</a>
+        <img src="img/donald-trump-1.png" alt="donald-trump-1">
+        <div class="hero-content">
+            <span class="category-tag">Economy</span>
+            <h1>The U.S. Economy Under Donald Trump in 2025</h1>
+            <p>In 2025, the U.S. economy is back on the front pages, in the wake of Donald Trump reentering the White House and crafting an agenda for the financial future of the nation. His return is not merely a political transition; it also marks a moment of utmost significance for investors, workers, and businesses navigating through uncertain waters.</p>
+            <a href="posts/donald-trump-1.html" class="cta-button">Read Full Analysis &rarr;</a>
+        </div>
       </article>
     </section>
 
-    <!-- Articles Grid -->
-    <section class="articles">
-      <article>
-        <img src="img/1.jpg" alt="Investing">
-        <h3>Test Test Test Test Test Test Test </h2>
-        <p>TTest Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test ...</p>
-        <a href="#">Read More</a>
-      </article>
+    <section class="top-stories">
+        <h2>Top Stories This Week</h2>
+        <div class="articles-grid">
+            <article>
+                <img src="img/1.jpg" alt="Investing Strategy">
+                <span class="category-tag">Investing</span>
+                <h3>The Quiet Collapse of Value Stocks: What You Need to Know</h3>
+                <p>Is the classic investing strategy finally dead? We examine the market shift and identify sectors still ripe for growth...</p>
+                <a href="#">Read More</a>
+            </article>
 
-      <article>
-        <img src="" alt="Crypto">
-        <h3>Test Test Test Test Test Test Test </h2>
-        <p>TTest Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test ...</p>
-        <a href="#">Read More</a>
-      </article>
+            <article>
+                <img src="img/crypto-coin.jpg" alt="Digital currency icon">
+                <span class="category-tag">Crypto</span>
+                <h3>Beyond Bitcoin: The Rise of Decentralized AI Protocols</h3>
+                <p>Artificial intelligence is meeting blockchain. Explore the new tokens driving the next wave of decentralized innovation...</p>
+                <a href="#">Read More</a>
+            </article>
 
-      <article>
-        <img src="" alt="Economy">
-        <h3>Test Test Test Test Test Test Test </h2>
-        <p>TTest Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test ...</p>
-        <a href="#">Read More</a>
-      </article>
-
-
-
+            <article>
+                <img src="img/markets-graph.jpg" alt="A financial line graph going up">
+                <span class="category-tag">Markets</span>
+                <h3>Rate Hikes and You: A Simple Guide to Surviving Market Volatility</h3>
+                <p>Central banks are tightening their belts. Learn how to protect your portfolio from sudden market swings...</p>
+                <a href="#">Read More</a>
+            </article>
+        </div>
     </section>
-
+    <!--
+    <section class="short-news">
+        <h2>Quick Takes</h2>
+        <ul>
+            <li><span class="news-tag">Tech:</span> **Quantum Computing Stock** surges 30% after breakthrough announcement.</li>
+            <li><span class="news-tag">Policy:</span> New **Tax Legislation** proposals could impact capital gains in Q4.</li>
+            <li><span class="news-tag">Energy:</span> Oil price stability remains elusive amid geopolitical tensions.</li>
+        </ul>
+        <a href="#" class="view-all">View All Quick Takes &rarr;</a>
+    </section>
+    -->
   </main>
 
-  <!-- Footer -->
   <footer>
-    &copy; 2025 FineMagazi. All rights reserved.
+    <div class="container">
+        &copy; 2025 FineMagazi. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Contact Us</a>
+    </div>
   </footer>
 
   <script src="script.js"></script>

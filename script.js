@@ -9,7 +9,7 @@ menuBtn.style.background = "none";
 menuBtn.style.border = "none";
 menuBtn.style.cursor = "pointer";
 menuBtn.style.display = "none";
-menuBtn.style.color = "#111";
+menuBtn.style.color = "var(--text-dark)"; // Use CSS variable for color
 
 // Append the button to header
 document.querySelector("header").appendChild(menuBtn);
@@ -20,8 +20,9 @@ function handleResize() {
     menuBtn.style.display = "block";
     nav.style.display = "none";
   } else {
-    menuBtn.style.display = "none";
-    nav.style.display = "flex";
+    menuBtn.style.display = "flex"; // Changed from "none" to "flex" to ensure button is visible on wide screens but the nav styling is handled by CSS
+    menuBtn.style.display = "none"; // Hide the button on wide screens
+    nav.style.display = "flex"; // Reset to default wide-screen nav display
     nav.style.flexDirection = "row";
     nav.style.gap = "1.5rem";
   }
@@ -31,7 +32,7 @@ window.addEventListener("load", handleResize);
 
 // Toggle nav on click
 menuBtn.addEventListener("click", () => {
-  if (nav.style.display === "none") {
+  if (nav.style.display === "none" || nav.style.display === "") {
     nav.style.display = "flex";
     nav.style.flexDirection = "column";
     nav.style.gap = "1rem";
@@ -81,7 +82,9 @@ darkModeBtn.addEventListener("click", () => {
 
   if (document.body.classList.contains("dark")) {
     darkModeBtn.innerText = "☀️ Light Mode";
+    menuBtn.style.color = "#eee"; // Update menu button color for dark mode
   } else {
     darkModeBtn.innerText = "🌙 Dark Mode";
+    menuBtn.style.color = "#111"; // Update menu button color for light mode
   }
 });
