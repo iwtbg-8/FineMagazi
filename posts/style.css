@@ -358,7 +358,7 @@ header nav a:hover::after {
 
 .post-body p, .post-body li {
     margin-bottom: 1.5rem;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: var(--text-dark);
 }
 
