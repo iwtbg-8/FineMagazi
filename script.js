@@ -159,6 +159,12 @@ function applyTheme(isDark) {
         darkModeBtn.textContent = '🌙 Dark Mode';
     }
     updateMenuBtnColor(isDark);
+  // Notify interested components/pages that the theme changed so they can update (charts, graphs, etc.)
+  try {
+    window.dispatchEvent(new Event('theme-change'));
+  } catch (e) {
+    // ignore dispatch errors on older browsers
+  }
 }
 
 // 1. Check and apply theme on page load to make it PERMANENT

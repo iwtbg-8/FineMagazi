@@ -28,6 +28,80 @@
         "mainEntityOfPage": "/posts/proven-strateges-to-grow.html"
     }
     </script>
+        <script data-title="Proven Strategies to Grow Your Wealth - FineMagazi" src="/head-loader.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        // -------------------------
+        // CONFIGURATION
+        // -------------------------
+        const weeklyDeposit = 50;      // $50 per week
+        const annualRate = 0.10;       // 10% annual return
+        const weeksPerYear = 52;
+        const years = 20;
+        const weeklyRate = annualRate / weeksPerYear;
+
+        // -------------------------
+        // BUILD DATA TABLE
+        // -------------------------
+        function getChartData() {
+            const data = [['Year', 'Total Wealth ($)', 'Contributions ($)']];
+            for (let y = 1; y <= years; y++) {
+            const n = y * weeksPerYear;
+            const fv = weeklyDeposit * (Math.pow(1 + weeklyRate, n) - 1) / weeklyRate; // Future Value
+            const contrib = weeklyDeposit * n;
+            data.push([`Year ${y}`, Math.round(fv), contrib]);
+            }
+            return google.visualization.arrayToDataTable(data);
+        }
+
+        // -------------------------
+        // THEME OPTIONS
+        // -------------------------
+        function getChartOptions(isDark) {
+            return {
+            title: '$50 Weekly at 10% Annual Return (20 Years)',
+            titleTextStyle: { color: isDark ? '#eee' : '#111', fontSize: 16 },
+            curveType: 'function',
+            legend: { position: 'bottom', textStyle: { color: isDark ? '#ddd' : '#222' } },
+            colors: isDark ? ['#4fc3f7', '#81c784'] : ['#1a73e8', '#43a047'],
+            lineWidth: 3,
+            pointSize: 5,
+            backgroundColor: { fill: isDark ? '#121212' : '#fafafa' },
+            chartArea: { width: '80%', height: '70%', backgroundColor: { fill: 'transparent' } },
+            hAxis: { textStyle: { color: isDark ? '#ccc' : '#333' }, gridlines: { color: isDark ? '#2a2a2a' : '#e9e9e9' } },
+            vAxis: { textStyle: { color: isDark ? '#ccc' : '#333' }, gridlines: { color: isDark ? '#2a2a2a' : '#e9e9e9' } },
+            tooltip: { textStyle: { color: '#111' }, showColorCode: true },
+            };
+        }
+
+        // -------------------------
+        // DRAW CHART
+        // -------------------------
+        var chart;
+
+        function drawChart() {
+            var data = getChartData();
+            var isDark = document.body.classList.contains('dark');
+            var options = getChartOptions(isDark);
+
+            if (!chart) {
+            chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+            }
+
+            chart.draw(data, options);
+        }
+
+        // -------------------------
+        // EVENTS
+        // -------------------------
+        window.addEventListener('resize', () => chart && drawChart());
+        window.addEventListener('theme-change', () => setTimeout(drawChart, 50));
+        </script>
+
+
 </head>
 <body>
 
@@ -63,7 +137,7 @@
         </p>
 
         <section class="post-body">
-            
+
             <h2>Turn Your First Dollar into a Catalyst</h2>
             <p>
                 The journey of wealth begins with a single step: taking control of your money. Even if you start small, the first action sets your momentum in motion. Think of your first saved or invested dollar as the seed of a tree that will grow into a massive, fruitful forest over time.
@@ -73,7 +147,9 @@
             </p>
             <p>
                 For example, if you invest $50 weekly at a 10% annual return, in 20 years, you could have over $150,000, all from small, consistent contributions. Imagine the possibilities if you increase contributions over time or invest in higher-return opportunities. The key is to start, no matter how small.
-            </p>
+            </p> <a href="" class="cta-button">Learn More &rarr;</a>
+            <div id="curve_chart" style="width: 100%; max-width: 900px; height: 500px; margin: 0 auto; background: transparent; border-radius: 6px;">
+            </div>
               
             <h2>Let Your Money Work for You</h2>
             <p>
