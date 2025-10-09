@@ -600,3 +600,27 @@ body.dark .post-meta, body.dark .author-bio {
         font-size: 1.8rem;
     }
 }
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    header nav {
+        margin-top: 10px;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}
+@media (max-width: 400px) {
+    .cta-button {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+}
+@media (max-width: 320px) {
+    .cta-button {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+}
+/* End of CSS */

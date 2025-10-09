@@ -1,7 +1,68 @@
-// ================= MOBILE MENU TOGGLE (Keep as-is) =================
-const nav = document.querySelector("header nav");
-const menuBtn = document.createElement("button");
 
+// ================= COMMON NAV LOADER =================
+function loadCommonNav(callback) {
+  const navPlaceholder = document.getElementById("nav-placeholder");
+  if (!navPlaceholder) return;
+  // Try several candidate paths so pages in subdirectories can still load the root nav.
+  const candidates = [
+    "nav.html",
+    "../nav.html",
+    "/nav.html"
+  ];
+
+  let i = 0;
+  function tryNext() {
+    if (i >= candidates.length) {
+      console.error('loadCommonNav: failed to load nav.html from any candidate path:', candidates);
+      return Promise.reject(new Error('Failed to load nav.html'));
+    }
+
+    const path = candidates[i++];
+    return fetch(path).then(response => {
+      if (!response.ok) {
+        // try next candidate
+        return tryNext();
+      }
+      return response.text();
+    }).catch(() => {
+      // network error -> try next
+      return tryNext();
+    });
+  }
+
+  tryNext()
+    .then(html => {
+      if (!html) return;
+
+      // Compute prefix based on page path (same logic as head-loader)
+      const path = window.location.pathname;
+      const segments = path.split('/').filter(Boolean);
+      if (segments.length && path[path.length - 1] !== '/') segments.pop();
+      let prefix = '';
+      for (let i = 0; i < segments.length; i++) prefix += '../';
+
+      // Create a container and rewrite relative hrefs
+      const container = document.createElement('div');
+      container.innerHTML = html;
+      const links = container.querySelectorAll('a[href]');
+      links.forEach(a => {
+        const h = a.getAttribute('href');
+        if (!h) return;
+        if (h.startsWith('http://') || h.startsWith('https://') || h.startsWith('/') || h.startsWith('#')) return;
+        a.setAttribute('href', prefix + h);
+      });
+
+      navPlaceholder.innerHTML = container.innerHTML;
+      if (typeof callback === "function") callback();
+    })
+    .catch(err => {
+      console.error('loadCommonNav: unable to load nav.html', err);
+    });
+}
+
+// ================= MOBILE MENU TOGGLE (Revised for dynamic nav) =================
+let nav = null;
+const menuBtn = document.createElement("button");
 menuBtn.innerText = "☰";
 menuBtn.id = "menu-btn";
 menuBtn.style.fontSize = "1.5rem";
@@ -10,23 +71,14 @@ menuBtn.style.border = "none";
 menuBtn.style.cursor = "pointer";
 menuBtn.style.display = "none";
 menuBtn.style.color = "var(--text-dark)"; // Initial color, will be updated by theme logic
-
-// Append the button to header
 document.querySelector("header").appendChild(menuBtn);
 
-// Function to update the mobile menu button text color based on the current theme
 function updateMenuBtnColor(isDark) {
-    if (isDark) {
-        // Use the dark mode text color (defined in your CSS as #eee)
-        menuBtn.style.color = "#eee";
-    } else {
-        // Use the light mode text color (defined in your CSS as #111)
-        menuBtn.style.color = "#111"; 
-    }
+    menuBtn.style.color = isDark ? "#eee" : "#111";
 }
 
-// Show/hide menu on small screens
 function handleResize() {
+  if (!nav) return;
   if (window.innerWidth <= 768) {
     menuBtn.style.display = "block";
     nav.style.display = "none";
@@ -37,11 +89,9 @@ function handleResize() {
     nav.style.gap = "1.5rem";
   }
 }
-window.addEventListener("resize", handleResize);
 
-
-// Toggle nav on click
 menuBtn.addEventListener("click", () => {
+  if (!nav) return;
   if (nav.style.display === "none" || nav.style.display === "") {
     nav.style.display = "flex";
     nav.style.flexDirection = "column";
@@ -50,6 +100,15 @@ menuBtn.addEventListener("click", () => {
     nav.style.display = "none";
   }
 });
+
+// Load nav and initialize menu logic
+window.addEventListener("DOMContentLoaded", () => {
+  loadCommonNav(() => {
+    nav = document.querySelector("#nav-placeholder nav");
+    handleResize();
+  });
+});
+window.addEventListener("resize", handleResize);
 
 
 // ================= BACK TO TOP BUTTON (Keep as-is) =================

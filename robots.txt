@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://finemagazi.com/sitemap.xml
+# If you want to disallow any paths, add Disallow: /path/

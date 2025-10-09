@@ -3,21 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FineMagazi - Your Daily Financial Insight</title>
-  <link rel="stylesheet" href="../style.css">
-  <link rel="icon" href="../img/F.jpg" type="image/x-icon" sizes="48x48">
+  <script>
+    // Per-page meta for SEO; head-loader will use this to override defaults
+    window.PAGE_META = {
+      title: 'Economy - FineMagazi',
+      description: 'Economic analysis, policy explainers, and macro outlook essays from FineMagazi.',
+      image: '/img/donald-trump-1.png',
+      url: '/economy/economy.html'
+    };
+  </script>
+  <script data-title="Economy - FineMagazi" src="/head-loader.js"></script>
 </head>
 <body>
 
   <header>
     <div class="logo">FineMagazi</div>
-    <nav>
-      <a href="../index.html">Home</a>
-      <a href="../markets/markets.html">Markets</a>
-      <a href="../investing/investing.html">Investing</a>
-      <a href="../economy/economy.html">Economy</a>
-      <a href="../crypto/crypto.html">Crypto</a>
-    </nav>
+    <div id="nav-placeholder"></div>
     <button id="dark-mode">🌙 Dark Mode</button>
   </header>
 
@@ -25,7 +26,7 @@
 
     <section class="hero-section">
       <article>
-        <img src="../img/donald-trump-1.png" alt="donald-trump-1">
+  <img src="../img/donald-trump-1.png" alt="US economy and policy under Donald Trump 2025" loading="lazy">
         <div class="hero-content">
             <span class="category-tag">Economy</span>
             <h1>The U.S. Economy Under Donald Trump in 2025</h1>
@@ -39,7 +40,7 @@
         <h2>Top Stories This Week</h2>
         <div class="articles-grid">
             <article>
-                <img src="img/Money.jpg" alt="Investing Strategy">
+                <img src="img/Money.jpg" alt="Personal finance and investing" loading="lazy">
                 <span class="category-tag">Investing</span>
                 <h3>Sorting Through FIRE Movements: A Lifestyle Primer (Financial Independence, Retire Early)</h3>
                 <p>More than ever today, the FIRE Movement (Financial Independence, Retire Early) has become a worldwide sensation among people who wish to escape the drudgery of the typical 9-to-5 job. But...</p>
@@ -47,7 +48,7 @@
             </article>
 
             <article>
-                <img src="img/Trump-coin.jpeg" alt="Trump-coin">
+                <img src="img/Trump-coin.jpeg" alt="Trump Coin cryptocurrency coverage" loading="lazy">
                 <span class="category-tag">Crypto</span>
                 <h3>Trump Coin: What It Is All About</h3>
                 <p>Trump Coin is certainly one of the most talked-about issues in 2025 when it comes to discussing politics, collecting, and cryptocurrency all in one topic. Have you caught sight of...</p>
@@ -55,7 +56,7 @@
             </article>
 
             <article>
-                <img src="img/markets-graph.jpg" alt="A financial line graph going up">
+                <img src="img/markets-graph.jpg" alt="Financial market trends line chart" loading="lazy">
                 <span class="category-tag">Markets</span>
                 <h3>Rate Hikes and You: A Simple Guide to Surviving Market Volatility</h3>
                 <p>Central banks are tightening their belts. Learn how to protect your portfolio from sudden market swings...</p>
