@@ -67,6 +67,33 @@ header {
   z-index: 1000;
 }
 
+/* Reserve a small min-height for the nav placeholder so inserting the nav
+     later via JS doesn't cause a large layout shift */
+#nav-placeholder {
+    min-height: 2.2rem; /* roughly the height of a simple nav */
+    display: block;
+}
+
+/* Menu button styling: positioned absolutely so inserting it won't push other
+     header elements and cause layout shifts. Keep it visually inside header. */
+.menu-btn {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none; /* shown by JS on small screens */
+    padding: 6px 8px;
+}
+
+/* Ensure header has a predictable height so absolute elements snap into place */
+header {
+    min-height: 56px;
+}
+
 header .logo {
   font-size: 2.2rem;
   font-weight: bold;
@@ -151,6 +178,13 @@ header nav a:hover::after {
     display: block;
 }
 
+/* Reserve image aspect ratios so the browser can allocate space before
+     images load. This reduces cumulative layout shift for lazy images. */
+.hero-section img {
+    aspect-ratio: 16 / 9;
+    background-color: #f4f4f4; /* neutral placeholder color */
+}
+
 .hero-content {
     position: absolute;
     bottom: 0;
@@ -214,6 +248,12 @@ header nav a:hover::after {
   height: 200px;
   object-fit: cover;
   display: block;
+}
+
+/* Reserve aspect ratio for grid images (prevents shift when images load) */
+.articles-grid img {
+    aspect-ratio: 3 / 2;
+    background-color: #f4f4f4;
 }
 
 .articles-grid article > * {

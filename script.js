@@ -63,18 +63,26 @@ function loadCommonNav(callback) {
 // ================= MOBILE MENU TOGGLE (Revised for dynamic nav) =================
 let nav = null;
 const menuBtn = document.createElement("button");
-menuBtn.innerText = "☰";
+   menuBtn.innerText = "\u2630";
 menuBtn.id = "menu-btn";
 menuBtn.style.fontSize = "1.5rem";
 menuBtn.style.background = "none";
 menuBtn.style.border = "none";
 menuBtn.style.cursor = "pointer";
 menuBtn.style.display = "none";
-menuBtn.style.color = "var(--text-dark)"; // Initial color, will be updated by theme logic
-document.querySelector("header").appendChild(menuBtn);
+   menuBtn.style.color = "var(--text-dark)"; // Initial color, will be updated by theme logic
+   // Use a class-based approach for styling rather than inline styles so CSS can
+   // reserve space or position the button without layout shifts.
+   menuBtn.className = 'menu-btn';
+   // Append to header but position absolutely to avoid affecting header flow
+   const headerEl = document.querySelector("header");
+   if (headerEl) {
+     headerEl.appendChild(menuBtn);
+   }
 
 function updateMenuBtnColor(isDark) {
-    menuBtn.style.color = isDark ? "#eee" : "#111";
+  // Keep only color change here; visual layout handled via CSS.
+  menuBtn.style.color = isDark ? "#eee" : "#111";
 }
 
 function handleResize() {
