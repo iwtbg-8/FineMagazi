@@ -567,6 +567,17 @@ body.dark .post-meta, body.dark .author-bio {
     color: var(--text-light);
 }
 
+/* Ensure images remain visible in dark mode. Some browsers or third-party
+     scripts may apply blend modes or filters when a dark class is present.
+     Reset common properties here so images always render correctly. */
+body.dark img {
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    mix-blend-mode: normal !important;
+    background-color: transparent !important;
+}
+
 
 /* --- RESPONSIVE --- */
 @media (max-width: 992px) {
