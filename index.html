@@ -11,6 +11,22 @@
       url: '/' // canonical for homepage
     };
   </script>
+  <!-- Critical, inline styles for above-the-fold content to improve LCP -->
+  <style>
+    /* Minimal critical CSS: header and hero layout */
+    header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid #ddd;position:sticky;top:0;background:#fff;z-index:1000}
+    header .logo{font-size:1.6rem;font-weight:bold}
+    .hero-section{margin:1.5rem 0 2rem;position:relative;overflow:hidden}
+    .hero-section img{width:100%;height:auto;display:block;object-fit:cover}
+    .hero-content{position:absolute;left:0;right:0;bottom:0;padding:20px;color:#fff;background:linear-gradient(to top,rgba(0,0,0,.7),rgba(0,0,0,0));}
+    @media (max-width:768px){.hero-content{padding:16px}}
+  </style>
+
+  <!-- Preload critical LCP hero image (webp preferred) and stylesheet to speed first meaningful paint -->
+  <link rel="preload" as="image" href="/img/GTA-VI-2-1280.webp" type="image/webp">
+  <link rel="preload" href="/style.css" as="style" onload="this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/style.css"></noscript>
+
   <script data-title="FineMagazi - Trusted Market & Investing Insights" src="/head-loader.js"></script>
 </head>
 <body>
@@ -25,12 +41,15 @@
 
     <section class="hero-section">
     <article>
-  <img
-    src="img/GTA-VI-2-1280.jpg"
-    srcset="img/GTA-VI-2-480.jpg 480w, img/GTA-VI-2-768.jpg 768w, img/GTA-VI-2-1280.jpg 1280w, img/GTA-VI-2.jpg 2912w"
-    sizes="(max-width: 600px) 480px, (max-width: 992px) 768px, 1280px"
-    alt="GTA VI launch and market impact"
-    width="2912" height="1632">
+  <picture>
+    <source type="image/webp" srcset="img/GTA-VI-2-480.webp 480w, img/GTA-VI-2-768.webp 768w, img/GTA-VI-2-1280.webp 1280w, img/GTA-VI-2.webp 2912w" sizes="(max-width: 600px) 480px, (max-width: 992px) 768px, 1280px">
+    <img
+      src="img/GTA-VI-2-1280.jpg"
+      srcset="img/GTA-VI-2-480.jpg 480w, img/GTA-VI-2-768.jpg 768w, img/GTA-VI-2-1280.jpg 1280w, img/GTA-VI-2.jpg 2912w"
+      sizes="(max-width: 600px) 480px, (max-width: 992px) 768px, 1280px"
+      alt="GTA VI launch and market impact"
+      width="2912" height="1632">
+  </picture>
         <div class="hero-content">
             <span class="category-tag">Markets</span>
                 <h1>GTA VI Launch Date: May 26, 2026 - Stock Traders Mint Money from What Could Be the Biggest Gaming Event of the Decade</h1>
