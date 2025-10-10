@@ -25,6 +25,24 @@
 <!-- Canonical (pages can override by setting window.PAGE_META.url before /head-loader.js runs) -->
 <link rel="canonical" href="/">
 
+<!-- Default hreflang tags for international targeting -->
+<link rel="alternate" hreflang="en-US" href="https://finemagazi.com/">
+<link rel="alternate" hreflang="en-GB" href="https://finemagazi.com/uk/">
+<link rel="alternate" hreflang="en-AU" href="https://finemagazi.com/au/">
+<link rel="alternate" hreflang="en-CA" href="https://finemagazi.com/ca/">
+<link rel="alternate" hreflang="en-IN" href="https://finemagazi.com/in/">
+<link rel="alternate" hreflang="en-SG" href="https://finemagazi.com/sg/">
+<link rel="alternate" hreflang="en-HK" href="https://finemagazi.com/hk/">
+<link rel="alternate" hreflang="de-DE" href="https://finemagazi.com/de/">
+<link rel="alternate" hreflang="fr-FR" href="https://finemagazi.com/fr/">
+<link rel="alternate" hreflang="es-ES" href="https://finemagazi.com/es/">
+<link rel="alternate" hreflang="it-IT" href="https://finemagazi.com/it/">
+<link rel="alternate" hreflang="ja-JP" href="https://finemagazi.com/jp/">
+<link rel="alternate" hreflang="ko-KR" href="https://finemagazi.com/kr/">
+<link rel="alternate" hreflang="zh-CN" href="https://finemagazi.com/cn/">
+<link rel="alternate" hreflang="pt-BR" href="https://finemagazi.com/br/">
+<link rel="alternate" hreflang="x-default" href="https://finemagazi.com/">
+
 <!-- Structured data (basic Website + Organization). Update with real logo/URLs as needed. -->
 <script type="application/ld+json">
 {
@@ -53,6 +71,9 @@
 <link rel="preload" href="/style.css" as="style" onload="this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="/style.css"></noscript>
 <link rel="icon" href="img/F.jpg" type="image/x-icon" sizes="48x48">
+
+<!-- Hreflang configuration for international targeting -->
+<script src="/hreflang-config.js"></script>
 
 <!-- Preload critical LCP hero image for faster paint -->
 <link rel="preload" as="image" href="/img/GTA-VI-2.jpg">

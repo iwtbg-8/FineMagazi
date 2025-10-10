@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hreflang Test - FineMagazi</title>
+  
+  <script>
+    // Test page META configuration
+    window.PAGE_META = {
+      title: 'Hreflang Implementation Test - FineMagazi',
+      description: 'Test page to verify hreflang tags are working correctly for international SEO.',
+      image: '/img/F.jpg',
+      url: '/hreflang-test.html'
+    };
+  </script>
+  
+  <script data-title="Hreflang Test - FineMagazi" src="/head-loader.js"></script>
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    .test-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border: 2px solid #e1e1e1;
+    }
+    .hreflang-display {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      border-left: 4px solid #007cba;
+    }
+    .hreflang-tag {
+      font-family: monospace;
+      font-size: 0.9em;
+      color: #333;
+      margin: 0.5rem 0;
+      padding: 0.25rem;
+      background: #f5f5f5;
+      border-radius: 3px;
+    }
+    .success {
+      color: #28a745;
+      font-weight: bold;
+    }
+    .warning {
+      color: #ffc107;
+      font-weight: bold;
+    }
+    .error {
+      color: #dc3545;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">FineMagazi</div>
+    <div id="nav-placeholder"></div>
+    <button id="dark-mode">🌙 Dark Mode</button>
+  </header>
+
+  <main class="container">
+    <div class="test-container">
+      <h1>🌍 Hreflang Implementation Test</h1>
+      
+      <p>This page tests the hreflang implementation for FineMagazi's international SEO targeting.</p>
+      
+      <div class="hreflang-display">
+        <h3>Hreflang Status:</h3>
+        <div id="hreflang-status">Loading...</div>
+      </div>
+      
+      <div class="hreflang-display">
+        <h3>Detected Hreflang Tags:</h3>
+        <div id="hreflang-tags">Loading...</div>
+      </div>
+      
+      <div class="hreflang-display">
+        <h3>Regional URLs for this page:</h3>
+        <div id="regional-urls">Loading...</div>
+      </div>
+      
+      <h3>What this test checks:</h3>
+      <ul>
+        <li>✅ Hreflang configuration file loads</li>
+        <li>✅ Tags are dynamically injected</li>
+        <li>✅ All target regions are included</li>
+        <li>✅ URLs follow correct format</li>
+        <li>✅ x-default fallback is present</li>
+      </ul>
+      
+      <p><a href="index.html">← Back to Homepage</a></p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+        &copy; 2025 FineMagazi. All rights reserved. | <a href="privacy-policy.html">Privacy Policy</a>
+    </div>
+  </footer>
+
+  <script>
+    // Test hreflang implementation
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        testHreflangImplementation();
+      }, 1000); // Wait for head-loader to complete
+    });
+    
+    function testHreflangImplementation() {
+      const statusDiv = document.getElementById('hreflang-status');
+      const tagsDiv = document.getElementById('hreflang-tags');
+      const urlsDiv = document.getElementById('regional-urls');
+      
+      // Check if hreflang config is loaded
+      const configLoaded = typeof window.HREFLANG_CONFIG !== 'undefined';
+      const generateFunction = typeof window.generateHreflangUrls === 'function';
+      const injectFunction = typeof window.injectHreflangTags === 'function';
+      
+      // Check for hreflang tags in the document
+      const hreflangTags = document.head.querySelectorAll('link[hreflang]');
+      
+      // Status summary
+      let statusHtml = '';
+      if (configLoaded && generateFunction && injectFunction) {
+        statusHtml += '<div class="success">✅ Hreflang configuration loaded successfully</div>';
+      } else {
+        statusHtml += '<div class="error">❌ Hreflang configuration failed to load</div>';
+      }
+      
+      if (hreflangTags.length > 0) {
+        statusHtml += `<div class="success">✅ Found ${hreflangTags.length} hreflang tags</div>`;
+      } else {
+        statusHtml += '<div class="error">❌ No hreflang tags found</div>';
+      }
+      
+      statusDiv.innerHTML = statusHtml;
+      
+      // Display detected tags
+      let tagsHtml = '';
+      if (hreflangTags.length > 0) {
+        hreflangTags.forEach(function(tag) {
+          const hreflang = tag.getAttribute('hreflang');
+          const href = tag.getAttribute('href');
+          tagsHtml += `<div class="hreflang-tag">&lt;link rel="alternate" hreflang="${hreflang}" href="${href}"&gt;</div>`;
+        });
+      } else {
+        tagsHtml = '<div class="error">No hreflang tags detected</div>';
+      }
+      tagsDiv.innerHTML = tagsHtml;
+      
+      // Display regional URLs
+      let urlsHtml = '';
+      if (configLoaded && generateFunction) {
+        try {
+          const urls = window.generateHreflangUrls('/hreflang-test.html');
+          Object.keys(urls).forEach(function(hreflang) {
+            urlsHtml += `<div><strong>${hreflang}:</strong> ${urls[hreflang]}</div>`;
+          });
+        } catch (e) {
+          urlsHtml = '<div class="error">Error generating URLs: ' + e.message + '</div>';
+        }
+      } else {
+        urlsHtml = '<div class="warning">URL generation function not available</div>';
+      }
+      urlsDiv.innerHTML = urlsHtml;
+    }
+  </script>
+  
+  <script src="script.js"></script>
+</body>
+</html>

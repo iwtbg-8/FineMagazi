@@ -137,6 +137,19 @@
             return el;
           }
 
+          // Helper to create or update hreflang tags
+          function upsertHreflang(hreflang, href) {
+            let el = document.head.querySelector('link[hreflang="' + hreflang + '"]');
+            if (!el) {
+              el = document.createElement('link');
+              el.setAttribute('rel', 'alternate');
+              el.setAttribute('hreflang', hreflang);
+              document.head.appendChild(el);
+            }
+            el.setAttribute('href', href);
+            return el;
+          }
+
           if (m.description) {
             upsertMeta('meta[name="description"]', { name: 'description', content: m.description });
             upsertMeta('meta[property="og:description"]', { property: 'og:description', content: m.description });
@@ -172,6 +185,44 @@
           if (m.title) {
             upsertMeta('meta[property="og:title"]', { property: 'og:title', content: m.title });
             upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: m.title });
+          }
+
+          // Add hreflang tags for international targeting
+          if (m.url && window.injectHreflangTags) {
+            // Use the hreflang configuration to inject tags
+            window.injectHreflangTags(m.url);
+          } else if (m.url) {
+            // Fallback to basic hreflang implementation
+            const baseUrl = 'https://finemagazi.com';
+            const currentPath = m.url;
+            
+            // Define basic region-specific domains or paths
+            const regions = {
+              'en-US': baseUrl + currentPath,           // United States
+              'en-GB': baseUrl + '/uk' + currentPath,   // United Kingdom
+              'en-AU': baseUrl + '/au' + currentPath,   // Australia
+              'en-CA': baseUrl + '/ca' + currentPath,   // Canada
+              'en-IN': baseUrl + '/in' + currentPath,   // India
+              'en-SG': baseUrl + '/sg' + currentPath,   // Singapore
+              'en-HK': baseUrl + '/hk' + currentPath,   // Hong Kong
+              'de-DE': baseUrl + '/de' + currentPath,   // Germany
+              'fr-FR': baseUrl + '/fr' + currentPath,   // France
+              'es-ES': baseUrl + '/es' + currentPath,   // Spain
+              'it-IT': baseUrl + '/it' + currentPath,   // Italy
+              'ja-JP': baseUrl + '/jp' + currentPath,   // Japan
+              'ko-KR': baseUrl + '/kr' + currentPath,   // South Korea
+              'zh-CN': baseUrl + '/cn' + currentPath,   // China
+              'pt-BR': baseUrl + '/br' + currentPath,   // Brazil
+              'x-default': baseUrl + currentPath        // Default fallback
+            };
+
+            // Remove existing hreflang tags to avoid duplicates
+            document.head.querySelectorAll('link[hreflang]').forEach(el => el.remove());
+
+            // Add hreflang tags for each region
+            Object.keys(regions).forEach(function(hreflang) {
+              upsertHreflang(hreflang, regions[hreflang]);
+            });
           }
         }
       } catch (e) {
