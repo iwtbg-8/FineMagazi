@@ -13,10 +13,7 @@
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://finemagazi.com/index.html</loc>
-  <lastmod>2025-10-05T13:09:14+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
+  <!-- index.html duplicate removed - root (/) is canonical -->
 <url>
   <loc>https://finemagazi.com/markets/markets.html</loc>
   <lastmod>2025-10-05T13:09:14+00:00</lastmod>

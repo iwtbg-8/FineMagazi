@@ -66,6 +66,40 @@
     }
   }
 
+  // If a page set PAGE_META before this script runs, insert the most critical
+  // SEO tags synchronously so crawlers that don't wait for the async head fetch
+  // still see canonical/title/description. This helps prevent "Crawled - currently not indexed"
+  // caused by missing canonical/meta at crawl-time.
+  try {
+    if (window.PAGE_META && typeof window.PAGE_META === 'object') {
+      const early = window.PAGE_META;
+      if (early.title) document.title = early.title;
+
+      if (early.description) {
+        let d = document.head.querySelector('meta[name="description"]');
+        if (!d) {
+          d = document.createElement('meta');
+          d.setAttribute('name', 'description');
+          document.head.appendChild(d);
+        }
+        d.setAttribute('content', early.description);
+      }
+
+      if (early.url) {
+        let c = document.head.querySelector('link[rel="canonical"]');
+        if (!c) {
+          c = document.createElement('link');
+          c.setAttribute('rel', 'canonical');
+          document.head.appendChild(c);
+        }
+        c.setAttribute('href', early.url);
+      }
+    }
+  } catch (e) {
+    // Non-fatal; continue with async head fetch
+    console.error('PAGE_META early injection error', e);
+  }
+
   // Load head then apply title (and re-run any initialization that needs head resources)
   fetchAndInsertHead().then(function () {
       // After head is inserted, allow per-page meta overrides via window.PAGE_META
