@@ -66,6 +66,21 @@
     }
   }
 
+  // Normalize a provided URL to an absolute URL suitable for canonical/og:url.
+  // Accepts absolute (http/https), protocol-relative (//), root-relative (/path) and relative paths.
+  function toAbsoluteUrl(u) {
+    try {
+      if (!u) return null;
+      if (u.indexOf('http://') === 0 || u.indexOf('https://') === 0) return u;
+      if (u.indexOf('//') === 0) return window.location.protocol + u;
+      if (u.indexOf('/') === 0) return window.location.origin + u;
+      // relative path: resolve against current document location
+      return new URL(u, window.location.href).href;
+    } catch (e) {
+      return u;
+    }
+  }
+
   // If a page set PAGE_META before this script runs, insert the most critical
   // SEO tags synchronously so crawlers that don't wait for the async head fetch
   // still see canonical/title/description. This helps prevent "Crawled - currently not indexed"
@@ -92,7 +107,7 @@
           c.setAttribute('rel', 'canonical');
           document.head.appendChild(c);
         }
-        c.setAttribute('href', early.url);
+        c.setAttribute('href', toAbsoluteUrl(early.url) || early.url);
       }
     }
   } catch (e) {
@@ -132,17 +147,27 @@
             upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: m.image });
           }
           if (m.url) {
-            // Update canonical link
+            // Update canonical link (always use an absolute URL)
+            const abs = toAbsoluteUrl(m.url) || m.url;
             let canonical = document.head.querySelector('link[rel="canonical"]');
             if (!canonical) {
               canonical = document.createElement('link');
               canonical.setAttribute('rel', 'canonical');
               document.head.appendChild(canonical);
             }
-            canonical.setAttribute('href', m.url);
+            canonical.setAttribute('href', abs);
 
             // og:url
-            upsertMeta('meta[property="og:url"]', { property: 'og:url', content: m.url });
+            upsertMeta('meta[property="og:url"]', { property: 'og:url', content: abs });
+          } else {
+            // If no PAGE_META.url provided, ensure there is at least a canonical for the current page
+            let canonical = document.head.querySelector('link[rel="canonical"]');
+            if (!canonical) {
+              canonical = document.createElement('link');
+              canonical.setAttribute('rel', 'canonical');
+              canonical.setAttribute('href', window.location.origin + window.location.pathname);
+              document.head.appendChild(canonical);
+            }
           }
           if (m.title) {
             upsertMeta('meta[property="og:title"]', { property: 'og:title', content: m.title });
