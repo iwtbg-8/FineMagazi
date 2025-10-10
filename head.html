@@ -48,9 +48,13 @@
 }
 </script>
 
-<!-- Common stylesheet and favicon (use relative paths; loader will rewrite for subfolders) -->
-<link rel="stylesheet" href="style.css">
+<!-- Preload critical stylesheet to reduce render blocking, then apply it onload -->
+<link rel="preload" href="/style.css" as="style" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="/style.css"></noscript>
 <link rel="icon" href="img/F.jpg" type="image/x-icon" sizes="48x48">
+
+<!-- Preload critical LCP hero image for faster paint -->
+<link rel="preload" as="image" href="/img/GTA-VI-2.jpg">
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MNRPX64PH6"></script>
