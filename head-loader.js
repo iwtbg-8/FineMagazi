@@ -2,6 +2,16 @@
 // Dynamically loads /head.html into the document <head>.
 // Usage: include this script in the page (before other scripts that depend on head resources)
 (function () {
+  // Early theme detection to prevent flickering
+  (function() {
+    const savedTheme = localStorage.getItem('themePreference');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark');
+    } else if (savedTheme === null && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+  })();
+
   function fetchAndInsertHead() {
     const candidates = [
       '/head.html',

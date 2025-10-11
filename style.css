@@ -65,6 +65,8 @@ header {
   position: sticky; /* Sticky header for better navigation */
   top: 0;
   z-index: 1000;
+  min-height: 64px; /* Ensure consistent height */
+  position: relative; /* For absolute positioned children */
 }
 
 /* Reserve a small min-height for the nav placeholder so inserting the nav
@@ -72,6 +74,9 @@ header {
 #nav-placeholder {
     min-height: 2.2rem; /* roughly the height of a simple nav */
     display: block;
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
 /* Menu button styling: positioned absolutely so inserting it won't push other
@@ -87,22 +92,27 @@ header {
     cursor: pointer;
     display: none; /* shown by JS on small screens */
     padding: 6px 8px;
+    color: var(--text-dark);
+    transition: color 0.3s ease;
+    z-index: 1001;
 }
 
-/* Ensure header has a predictable height so absolute elements snap into place */
-header {
-    min-height: 56px;
+.menu-btn:hover {
+    opacity: 0.7;
 }
 
 header .logo {
   font-size: 2.2rem;
   font-weight: bold;
   letter-spacing: -0.5px;
+  flex-shrink: 0;
 }
 
 header nav {
     display: flex;
     gap: 1.5rem;
+    align-items: center;
+    margin: 0 auto;
 }
 
 header nav a {
@@ -112,6 +122,7 @@ header nav a {
   font-weight: 600;
   padding: 5px 0;
   position: relative;
+  white-space: nowrap;
 }
 
 header nav a::after {
@@ -132,7 +143,6 @@ header nav a:hover::after {
     background: var(--primary-color);
 }
 
-
 #dark-mode {
   background: var(--text-dark);
   color: #fff;
@@ -142,6 +152,8 @@ header nav a:hover::after {
   cursor: pointer;
   font-size: 0.9rem;
   transition: background 0.3s;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 #dark-mode:hover {
@@ -540,6 +552,11 @@ body.dark footer {
 
 body.dark #dark-mode {
   background-color: #555;
+  color: #fff;
+}
+
+body.dark #dark-mode:hover {
+  background-color: var(--primary-color);
 }
 
 body.dark .hero-content .category-tag {
@@ -578,6 +595,42 @@ body.dark img {
     background-color: transparent !important;
 }
 
+/* Dark mode enhancements for better consistency */
+body.dark .menu-btn {
+    color: #eee !important;
+}
+
+body.dark .back-link {
+    color: var(--primary-color);
+}
+
+body.dark .cta-button {
+    background-color: var(--primary-color);
+}
+
+body.dark .cta-button:hover {
+    background-color: #4a9eee;
+}
+
+body.dark .news-tag {
+    color: var(--primary-color);
+}
+
+body.dark input, body.dark textarea, body.dark select {
+    background-color: #333;
+    color: var(--text-dark);
+    border: 1px solid var(--border-light);
+}
+
+body.dark input:focus, body.dark textarea:focus, body.dark select:focus {
+    border-color: var(--primary-color);
+}
+
+/* Fix any gradient overlays in dark mode */
+body.dark .hero-content {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2));
+}
+
 
 /* --- RESPONSIVE --- */
 @media (max-width: 992px) {
@@ -587,6 +640,68 @@ body.dark img {
 }
 
 @media (max-width: 768px) {
+    /* Header adjustments for mobile */
+    header {
+        padding: 1rem 1.5rem;
+    }
+    
+    header .logo {
+        font-size: 1.8rem;
+    }
+    
+    /* Show mobile menu button */
+    .menu-btn {
+        display: block !important;
+        right: 1rem;
+    }
+    
+    /* Hide navigation by default on mobile */
+    #nav-placeholder nav {
+        display: none !important;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--background-light);
+        border-bottom: 1px solid var(--border-light);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        flex-direction: column !important;
+        gap: 1rem !important;
+        z-index: 999;
+    }
+    
+    /* When mobile menu is shown */
+    #nav-placeholder nav.mobile-nav-open {
+        display: flex !important;
+    }
+    
+    /* Mobile nav links styling */
+    #nav-placeholder nav a {
+        padding: 12px 16px;
+        margin: 0;
+        border-bottom: 1px solid var(--border-light);
+        transition: background-color 0.2s;
+    }
+    
+    #nav-placeholder nav a:last-child {
+        border-bottom: none;
+    }
+    
+    #nav-placeholder nav a:hover {
+        background-color: rgba(0, 119, 204, 0.1);
+    }
+    
+    /* Adjust dark mode button position on mobile */
+    #dark-mode {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+        position: absolute;
+        right: 4rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
     /*
     1. Force the article to stack its children (image and content) vertically.
        This assumes your desktop style uses flex or grid to place them side-by-side.
@@ -629,8 +744,6 @@ body.dark img {
         text-align: center;
     }
     
-    /* ... your existing mobile styles continue ... */
-    
     /* Existing style: ensure the font size is appropriate */
     .hero-content h1 {
         font-size: 2rem;
@@ -653,25 +766,93 @@ body.dark img {
 }
 @media (max-width: 600px) {
     header {
-        flex-direction: column;
-        align-items: flex-start;
+        padding: 0.8rem 1rem;
     }
-    header nav {
-        margin-top: 10px;
-        flex-wrap: wrap;
-        gap: 1rem;
+    
+    header .logo {
+        font-size: 1.6rem;
+    }
+    
+    #dark-mode {
+        font-size: 0.7rem;
+        padding: 5px 10px;
+        right: 3.5rem;
+    }
+    
+    .menu-btn {
+        right: 0.8rem;
+        font-size: 1.3rem;
     }
 }
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.5rem;
+    }
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+    .hero-section img {
+        max-height: 300px;
+    }
+    .post-title {
+        font-size: 1.8rem;
+    }
+    
+    header .logo {
+        font-size: 1.4rem;
+    }
+    
+    #dark-mode {
+        font-size: 0.65rem;
+        padding: 4px 8px;
+    }
+}
+
 @media (max-width: 400px) {
     .cta-button {
         padding: 12px 15px;
         font-size: 0.9rem;
     }
+    
+    header .logo {
+        font-size: 1.3rem;
+    }
 }
+
 @media (max-width: 320px) {
     .cta-button {
         padding: 10px 12px;
         font-size: 0.8rem;
     }
+    
+    header {
+        padding: 0.6rem 0.8rem;
+    }
+    
+    header .logo {
+        font-size: 1.2rem;
+    }
+    
+    #dark-mode {
+        font-size: 0.6rem;
+        padding: 3px 6px;
+    }
+    
+    .menu-btn {
+        font-size: 1.2rem;
+        right: 0.6rem;
+    }
 }
+
+/* Dark mode mobile adjustments */
+body.dark #nav-placeholder nav {
+    background-color: #222;
+    border-bottom-color: var(--border-light);
+}
+
+body.dark #nav-placeholder nav a:hover {
+    background-color: rgba(102, 170, 255, 0.1);
+}
+
 /* End of CSS */

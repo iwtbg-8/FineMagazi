@@ -1,3 +1,10 @@
+// ================= UNIFIED SCRIPT FOR ALL PAGES =================
+// This script provides consistent functionality across all pages:
+// - Dynamic navigation loading
+// - Persistent theme management
+// - Mobile menu functionality
+// - Back to top button
+
 // ================= COMMON NAV LOADER =================
 function loadCommonNav(callback) {
   const navPlaceholder = document.getElementById("nav-placeholder");
@@ -187,23 +194,30 @@ const localStorageKey = 'themePreference';
 function applyTheme(isDark) {
     if (isDark) {
         body.classList.add('dark');
-        darkModeBtn.textContent = '☀️ Light Mode';
+        if (darkModeBtn) darkModeBtn.textContent = '☀️ Light Mode';
     } else {
         body.classList.remove('dark');
-        darkModeBtn.textContent = '🌙 Dark Mode';
+        if (darkModeBtn) darkModeBtn.textContent = '🌙 Dark Mode';
     }
     updateMenuBtnColor(isDark);
-  // Notify interested components/pages that the theme changed so they can update (charts, graphs, etc.)
-  try {
-    window.dispatchEvent(new Event('theme-change'));
-  } catch (e) {
-    // ignore dispatch errors on older browsers
-  }
+    
+    // Update back to top button for dark mode
+    if (isDark) {
+        backToTop.style.background = "#66aaff";
+    } else {
+        backToTop.style.background = "#0077cc";
+    }
+    
+    // Notify interested components/pages that the theme changed so they can update (charts, graphs, etc.)
+    try {
+        window.dispatchEvent(new Event('theme-change'));
+    } catch (e) {
+        // ignore dispatch errors on older browsers
+    }
 }
 
-// 1. Check and apply theme on page load to make it PERMANENT
-window.addEventListener("load", () => {
-    handleResize(); // Ensure mobile menu state is correct
+// Function to initialize theme on page load
+function initializeTheme() {
     const savedTheme = localStorage.getItem(localStorageKey);
     let isDark = false;
 
@@ -216,16 +230,38 @@ window.addEventListener("load", () => {
     }
     
     applyTheme(isDark);
+}
+
+// 1. Check and apply theme on page load to make it PERMANENT
+window.addEventListener("DOMContentLoaded", () => {
+    initializeTheme();
+});
+
+// Also apply on window load as backup
+window.addEventListener("load", () => {
+    handleResize(); // Ensure mobile menu state is correct
+    initializeTheme(); // Apply theme again as backup
 });
 
 // 2. Handle the toggle button click and save preference
-darkModeBtn.addEventListener("click", () => {
-    // Determine the new theme state
-    const isDark = !body.classList.contains('dark');
-    
-    applyTheme(isDark);
+if (darkModeBtn) {
+    darkModeBtn.addEventListener("click", () => {
+        // Determine the new theme state
+        const isDark = !body.classList.contains('dark');
+        
+        applyTheme(isDark);
 
-    // Save the new preference to localStorage
-    const themeToSave = isDark ? 'dark' : 'light';
-    localStorage.setItem(localStorageKey, themeToSave);
-});
+        // Save the new preference to localStorage
+        const themeToSave = isDark ? 'dark' : 'light';
+        localStorage.setItem(localStorageKey, themeToSave);
+    });
+}
+
+// Register service worker for improved caching (non-blocking)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.warn('SW registration failed:', err));
+  });
+}

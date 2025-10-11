@@ -63,22 +63,24 @@ function loadCommonNav(callback) {
 // ================= MOBILE MENU TOGGLE (Revised for dynamic nav) =================
 let nav = null;
 const menuBtn = document.createElement("button");
-   menuBtn.innerText = "\u2630";
+menuBtn.innerText = "\u2630";
 menuBtn.id = "menu-btn";
+menuBtn.setAttribute("aria-label", "Toggle mobile navigation menu");
+menuBtn.setAttribute("aria-expanded", "false");
 menuBtn.style.fontSize = "1.5rem";
 menuBtn.style.background = "none";
 menuBtn.style.border = "none";
 menuBtn.style.cursor = "pointer";
 menuBtn.style.display = "none";
-   menuBtn.style.color = "var(--text-dark)"; // Initial color, will be updated by theme logic
-   // Use a class-based approach for styling rather than inline styles so CSS can
-   // reserve space or position the button without layout shifts.
-   menuBtn.className = 'menu-btn';
-   // Append to header but position absolutely to avoid affecting header flow
-   const headerEl = document.querySelector("header");
-   if (headerEl) {
-     headerEl.appendChild(menuBtn);
-   }
+menuBtn.style.color = "var(--text-dark)"; // Initial color, will be updated by theme logic
+// Use a class-based approach for styling rather than inline styles so CSS can
+// reserve space or position the button without layout shifts.
+menuBtn.className = 'menu-btn';
+// Append to header but position absolutely to avoid affecting header flow
+const headerEl = document.querySelector("header");
+if (headerEl) {
+  headerEl.appendChild(menuBtn);
+}
 
 function updateMenuBtnColor(isDark) {
   // Keep only color change here; visual layout handled via CSS.
@@ -87,25 +89,55 @@ function updateMenuBtnColor(isDark) {
 
 function handleResize() {
   if (!nav) return;
+  
   if (window.innerWidth <= 768) {
     menuBtn.style.display = "block";
     nav.style.display = "none";
+    nav.classList.remove('mobile-nav-open');
   } else {
     menuBtn.style.display = "none";
     nav.style.display = "flex";
     nav.style.flexDirection = "row";
     nav.style.gap = "1.5rem";
+    nav.style.position = "static";
+    nav.style.background = "none";
+    nav.style.border = "none";
+    nav.style.boxShadow = "none";
+    nav.style.padding = "0";
+    nav.classList.remove('mobile-nav-open');
   }
 }
 
 menuBtn.addEventListener("click", () => {
   if (!nav) return;
-  if (nav.style.display === "none" || nav.style.display === "") {
+  
+  if (nav.classList.contains('mobile-nav-open')) {
+    nav.classList.remove('mobile-nav-open');
+    nav.style.display = "none";
+    menuBtn.innerHTML = "\u2630"; // Hamburger icon
+    menuBtn.setAttribute("aria-expanded", "false");
+  } else {
+    nav.classList.add('mobile-nav-open');
     nav.style.display = "flex";
     nav.style.flexDirection = "column";
     nav.style.gap = "1rem";
-  } else {
+    menuBtn.innerHTML = "\u00D7"; // X icon
+    menuBtn.setAttribute("aria-expanded", "true");
+  }
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (!nav) return;
+  
+  if (window.innerWidth <= 768 && 
+      nav.classList.contains('mobile-nav-open') && 
+      !nav.contains(e.target) && 
+      !menuBtn.contains(e.target)) {
+    nav.classList.remove('mobile-nav-open');
     nav.style.display = "none";
+    menuBtn.innerHTML = "\u2630";
+    menuBtn.setAttribute("aria-expanded", "false");
   }
 });
 
@@ -113,7 +145,9 @@ menuBtn.addEventListener("click", () => {
 window.addEventListener("DOMContentLoaded", () => {
   loadCommonNav(() => {
     nav = document.querySelector("#nav-placeholder nav");
-    handleResize();
+    if (nav) {
+      handleResize();
+    }
   });
 });
 window.addEventListener("resize", handleResize);
@@ -161,10 +195,10 @@ const localStorageKey = 'themePreference';
 function applyTheme(isDark) {
     if (isDark) {
         body.classList.add('dark');
-        darkModeBtn.textContent = '☀️ Light Mode';
+        if (darkModeBtn) darkModeBtn.textContent = '☀️ Light Mode';
     } else {
         body.classList.remove('dark');
-        darkModeBtn.textContent = '🌙 Dark Mode';
+        if (darkModeBtn) darkModeBtn.textContent = '🌙 Dark Mode';
     }
     updateMenuBtnColor(isDark);
   // Notify interested components/pages that the theme changed so they can update (charts, graphs, etc.)
@@ -175,9 +209,8 @@ function applyTheme(isDark) {
   }
 }
 
-// 1. Check and apply theme on page load to make it PERMANENT
-window.addEventListener("load", () => {
-    handleResize(); // Ensure mobile menu state is correct
+// Function to initialize theme on page load
+function initializeTheme() {
     const savedTheme = localStorage.getItem(localStorageKey);
     let isDark = false;
 
@@ -190,19 +223,37 @@ window.addEventListener("load", () => {
     }
     
     applyTheme(isDark);
+}
+
+// Apply theme immediately to prevent flickering
+(function() {
+    const savedTheme = localStorage.getItem('themePreference');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark');
+    } else if (savedTheme === null && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+})();
+
+// 1. Check and apply theme on page load to make it PERMANENT
+window.addEventListener("load", () => {
+    handleResize(); // Ensure mobile menu state is correct
+    initializeTheme();
 });
 
 // 2. Handle the toggle button click and save preference
-darkModeBtn.addEventListener("click", () => {
-    // Determine the new theme state
-    const isDark = !body.classList.contains('dark');
-    
-    applyTheme(isDark);
+if (darkModeBtn) {
+    darkModeBtn.addEventListener("click", () => {
+        // Determine the new theme state
+        const isDark = !body.classList.contains('dark');
+        
+        applyTheme(isDark);
 
-    // Save the new preference to localStorage
-    const themeToSave = isDark ? 'dark' : 'light';
-    localStorage.setItem(localStorageKey, themeToSave);
-});
+        // Save the new preference to localStorage
+        const themeToSave = isDark ? 'dark' : 'light';
+        localStorage.setItem(localStorageKey, themeToSave);
+    });
+}
 
 // Register service worker for improved caching (non-blocking)
 if ('serviceWorker' in navigator) {
