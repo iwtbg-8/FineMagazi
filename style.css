@@ -423,6 +423,57 @@ header nav a:hover::after {
     font-size: 1.2rem;
 }
 
+/* Math formula styles for responsive design */
+.math-formula {
+    font-size: 1.7rem;
+    text-align: center;
+    margin: 1rem 0;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.math-formula-large {
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: var(--primary-color);
+}
+
+.math-formula-medium {
+    font-size: 2rem;
+    text-align: center;
+    margin: 1rem 0;
+    color: var(--primary-color);
+}
+
+/* Chart container responsive styling */
+canvas {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem auto;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+    margin: 2rem 0;
+}
+
+/* Author bio styling */
+.author-bio {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-light);
+    font-style: italic;
+}
+
+.back-to-home-btn {
+    margin-top: 3rem;
+    display: inline-block;
+}
+
 .callout p {
     margin-bottom: 0;
     font-size: 1rem;
@@ -629,7 +680,45 @@ body.dark img {
         text-align: center;
     }
     
-    /* ... your existing mobile styles continue ... */
+    /* Article view tablet improvements */
+    .article-view {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    
+    .post-title {
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+    
+    .post-body h2 {
+        font-size: 1.8rem;
+    }
+    
+    .post-body h3 {
+        font-size: 1.4rem;
+    }
+    
+    /* Math formulas tablet scaling */
+    .math-formula {
+        font-size: 1.3rem !important;
+    }
+    
+    .math-formula-large {
+        font-size: 1.8rem !important;
+    }
+    
+    .math-formula-medium {
+        font-size: 1.5rem !important;
+    }
+    
+    .post-body div[style*="font-size:2.5em"] {
+        font-size: 1.8rem !important;
+    }
+    
+    .post-body div[style*="font-size:2em"] {
+        font-size: 1.5rem !important;
+    }
     
     /* Existing style: ensure the font size is appropriate */
     .hero-content h1 {
@@ -649,6 +738,110 @@ body.dark img {
     }
     .post-title {
         font-size: 1.8rem;
+        line-height: 1.2;
+    }
+    
+    /* Article view mobile improvements */
+    .article-view {
+        padding-top: 1rem;
+        padding-bottom: 2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .post-content {
+        padding: 0;
+    }
+    
+    .post-hero-image {
+        border-radius: 4px;
+        margin-bottom: 1rem;
+    }
+    
+    .post-body h2 {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.3;
+    }
+    
+    .post-body h3 {
+        font-size: 1.2rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.6rem;
+        line-height: 1.3;
+    }
+    
+    .post-body p, .post-body li {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+    
+    .lead-paragraph {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+    }
+    
+    /* Math formulas mobile scaling */
+    .math-formula {
+        font-size: 1rem !important;
+        overflow-x: auto;
+        padding: 0.5rem;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        margin: 1rem 0;
+    }
+    
+    .math-formula-large {
+        font-size: 1.2rem !important;
+        overflow-x: auto;
+        padding: 0.5rem;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        margin: 1rem 0;
+    }
+    
+    .math-formula-medium {
+        font-size: 1.1rem !important;
+        overflow-x: auto;
+        padding: 0.5rem;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        margin: 1rem 0;
+    }
+    
+    .post-body div[style*="font-size:2.5em"],
+    .post-body div[style*="font-size:2em"] {
+        font-size: 1.2rem !important;
+        overflow-x: auto;
+        padding: 0.5rem;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        margin: 1rem 0;
+    }
+    
+    /* Chart responsiveness */
+    canvas {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Callout boxes mobile */
+    .callout {
+        padding: 10px 15px;
+        margin: 1.5rem 0;
+    }
+    
+    .callout h4 {
+        font-size: 1rem;
+    }
+    
+    /* Author bio mobile */
+    .author-bio {
+        font-size: 0.9rem;
+        margin-top: 2rem;
     }
 }
 @media (max-width: 600px) {
@@ -672,6 +865,41 @@ body.dark img {
     .cta-button {
         padding: 10px 12px;
         font-size: 0.8rem;
+    }
+    
+    /* Extra small screen improvements */
+    .article-view {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    
+    .post-title {
+        font-size: 1.5rem;
+        line-height: 1.2;
+    }
+    
+    .post-body h2 {
+        font-size: 1.3rem;
+    }
+    
+    .post-body h3 {
+        font-size: 1.1rem;
+    }
+    
+    .post-body p, .post-body li {
+        font-size: 0.95rem;
+    }
+    
+    .math-formula,
+    .math-formula-large,
+    .math-formula-medium {
+        font-size: 0.9rem !important;
+        padding: 0.3rem;
+    }
+    
+    .callout {
+        padding: 8px 12px;
+        margin: 1rem 0;
     }
 }
 /* End of CSS */
