@@ -3,6 +3,7 @@
 > **Financial news, investing guides, and market analysis to help you grow wealth and make smarter decisions.**
 
 [![Website](https://img.shields.io/badge/Website-finemagazi.com-blue)](https://finemagazi.com)
+[![GitHub Pages](https://img.shields.io/badge/Deployed%20on-GitHub%20Pages-green)](https://github.com/iwtbg-8/FineMagazi)
 [![License](https://img.shields.io/badge/License-Private-red)]()
 [![Last Updated](https://img.shields.io/badge/Updated-October%202025-green)]()
 
@@ -45,6 +46,41 @@ FineMagazi/
     ├── 📁 testing/           # Test files
     └── 📁 backups/           # Automated backups
 ```
+
+## 🚀 Deployment
+
+### GitHub Pages Setup
+
+This site is deployed using GitHub Pages with a custom domain:
+
+1. **Repository**: [iwtbg-8/FineMagazi](https://github.com/iwtbg-8/FineMagazi)
+2. **Custom Domain**: finemagazi.com
+3. **Branch**: main (root directory)
+4. **Build**: Automated via GitHub Actions
+
+### DNS Configuration
+
+For custom domain setup, configure these DNS records:
+
+**A Records (Apex Domain):**
+```
+185.199.108.153
+185.199.109.153  
+185.199.110.153
+185.199.111.153
+```
+
+**CNAME Record (WWW):**
+```
+www.finemagazi.com → iwtbg-8.github.io
+```
+
+### Deployment Workflow
+
+- **Automatic**: Pushes to `main` branch trigger deployment
+- **Build Process**: GitHub Actions runs minification
+- **HTTPS**: Enforced via GitHub Pages
+- **CDN**: Global distribution via GitHub's CDN
 
 ## 🚀 Quick Start
 
