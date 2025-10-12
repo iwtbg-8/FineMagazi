@@ -127,6 +127,15 @@
 
   // Load head then apply title (and re-run any initialization that needs head resources)
   fetchAndInsertHead().then(function () {
+      // Ensure there's at most one canonical link to avoid conflicting signals
+      try {
+        const canonicals = document.head.querySelectorAll('link[rel="canonical"]');
+        for (let i = 1; i < canonicals.length; i++) {
+          canonicals[i].remove();
+        }
+      } catch (e) {
+        // non-fatal
+      }
       // After head is inserted, allow per-page meta overrides via window.PAGE_META
       // Example: window.PAGE_META = { title: 'Article Title', description: '...', image: '/img/hero.jpg', url: '/posts/hero.html' }
       try {
