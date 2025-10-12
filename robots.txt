@@ -1,6 +1,1 @@
-
-User-agent: *
-Allow: /
-Disallow: /admin/
-Sitemap: https://finemagazi.com/sitemap.xml
-
+admin/seo/robots.txt

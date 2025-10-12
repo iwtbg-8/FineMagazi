@@ -1,0 +1,15 @@
+{
+  "name": "finemagazi-site",
+  "version": "1.0.0",
+  "description": "Build helpers for Finemagazi static site",
+  "private": true,
+  "scripts": {
+    "minify:js": "find ../.. -type f -name '*.js' ! -name '*.min.js' ! -path '*/admin/*' ! -path '*/node_modules/*' -print0 | xargs -0 -I{} sh -c \"npx terser '{}' -c -m -o '{}.tmp' && mv '{}.tmp' '{}'.min.js\"",
+    "minify:css": "find ../.. -type f -name '*.css' ! -name '*.min.css' ! -path '*/admin/*' ! -path '*/node_modules/*' -print0 | xargs -0 -I{} sh -c \"npx csso '{}' --output '{}.tmp' && mv '{}.tmp' '{}'.min.css\"",
+    "minify": "node ../tools/prod_minify.js"
+  },
+  "devDependencies": {
+    "terser": "^5.19.0",
+    "csso": "^5.0.0"
+  }
+}
