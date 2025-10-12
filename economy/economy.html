@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="v  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../script.js"></script>content="width=device-width, initial-scale=1.0">
   <title>Economy - FineMagazi</title>
   <script>
     // Per-page meta for SEO; head-loader will use this to override defaults
@@ -80,12 +84,17 @@
     -->
   </main>
 
-  <footer>
-    <div class="container">
-        &copy; 2025 FineMagazi. All rights reserved. | <a href="../privacy-policy.html">Privacy Policy</a> | <a href="#">Contact Us</a>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+<!-- Footer - Common element -->
+<div id="footer-placeholder"></div>
+<script>
+    // Dynamically load the footer.html into the placeholder
+    fetch('../footer.html')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('footer-placeholder').innerHTML = html;
+        });
+</script>
+<script src="../shared-script.js"></script>
+<script src="../script.js"></script>
 </body>
 </html>

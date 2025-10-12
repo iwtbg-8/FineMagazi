@@ -330,11 +330,15 @@
 
   </main>
 
-  <footer>
-    <div class="container">
-        &copy; 2025 FineMagazi. All rights reserved. | <a href="../privacy-policy.html">Privacy Policy</a> | <a href="#">Contact Us</a>
-    </div>
-  </footer>
+<footer id="footer-placeholder"></footer>
+<script>
+    // Dynamically load the common footer HTML
+    fetch('../footer.html')
+        .then(res => res.text())
+        .then(html => {
+            document.getElementById('footer-placeholder').innerHTML = html;
+        });
+</script>
 
   <script src="../script.js"></script>
 </body>

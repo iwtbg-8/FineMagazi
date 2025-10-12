@@ -1,6 +1,7 @@
 // ================= UNIFIED SCRIPT FOR ALL PAGES =================
 // This script provides consistent functionality across all pages:
 // - Dynamic navigation loading
+// - Dynamic footer loading
 // - Persistent theme management
 // - Mobile menu functionality
 // - Back to top button
@@ -63,6 +64,79 @@ function loadCommonNav(callback) {
     })
     .catch(err => {
       console.error('loadCommonNav: unable to load nav.html', err);
+    });
+}
+
+// ================= COMMON FOOTER LOADER =================
+function loadCommonFooter() {
+  const footerPlaceholder = document.getElementById("footer-placeholder");
+  if (!footerPlaceholder) return;
+  
+  // Try several candidate paths so pages in subdirectories can still load the root footer.
+  const candidates = [
+    "footer.html",
+    "../footer.html",
+    "/footer.html"
+  ];
+
+  let i = 0;
+  function tryNext() {
+    if (i >= candidates.length) {
+      console.error('loadCommonFooter: failed to load footer.html from any candidate path:', candidates);
+      return Promise.reject(new Error('Failed to load footer.html'));
+    }
+
+    const path = candidates[i++];
+    return fetch(path).then(response => {
+      if (!response.ok) {
+        // try next candidate
+        return tryNext();
+      }
+      return response.text();
+    }).catch(() => {
+      // network error -> try next
+      return tryNext();
+    });
+  }
+
+  tryNext()
+    .then(html => {
+      if (!html) return;
+
+      // Compute prefix based on page path (same logic as nav loader)
+      const path = window.location.pathname;
+      const segments = path.split('/').filter(Boolean);
+      if (segments.length && path[path.length - 1] !== '/') segments.pop();
+      let prefix = '';
+      for (let i = 0; i < segments.length; i++) prefix += '../';
+
+      // Create a container and rewrite relative hrefs
+      const container = document.createElement('div');
+      container.innerHTML = html;
+      
+      // Rewrite relative links in footer
+      const links = container.querySelectorAll('a[href]');
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('/') && !href.startsWith('//')) {
+          link.setAttribute('href', prefix.slice(0, -1) + href);
+        } else if (href && !href.startsWith('http') && !href.startsWith('//') && !href.startsWith('#')) {
+          link.setAttribute('href', prefix + href);
+        }
+      });
+
+      footerPlaceholder.innerHTML = container.innerHTML;
+    })
+    .catch(error => {
+      console.error('Failed to load footer:', error);
+      // Fallback footer
+      footerPlaceholder.innerHTML = `
+        <footer class="footer">
+          <div class="container">
+            <p>&copy; 2025 FineMagazi. All rights reserved. | <a href="/privacy-policy.html">Privacy Policy</a> | <a href="/About-Us.html">About Us</a></p>
+          </div>
+        </footer>
+      `;
     });
 }
 
@@ -142,7 +216,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Load nav and initialize menu logic
+// Load nav and footer and initialize menu logic
 window.addEventListener("DOMContentLoaded", () => {
   loadCommonNav(() => {
     nav = document.querySelector("#nav-placeholder nav");
@@ -150,6 +224,9 @@ window.addEventListener("DOMContentLoaded", () => {
       handleResize();
     }
   });
+  
+  // Load common footer
+  loadCommonFooter();
 });
 window.addEventListener("resize", handleResize);
 

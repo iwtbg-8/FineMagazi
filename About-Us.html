@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/F.jpg" type="image/x-icon" sizes="48x48">
+    
+    <script>
+        // Per-page SEO overrides (used by head-loader to populate title/meta/og tags)
+        window.PAGE_META = {
+            title: 'About Us – FineMagazi',
+            description: 'Learn about FineMagazi - where financial wisdom meets real-world inspiration. Our mission is to make finance simple, practical, and inspiring for everyone.',
+            image: '/img/F.jpg',
+            url: '/About-Us.html'
+        };
+    </script>
+    
+    <!-- Explicit canonical to avoid "Duplicate without user-selected canonical" SEO warning -->
+    <link rel="canonical" href="https://finemagazi.com/About-Us.html">
+    
+    <!-- Critical, inline styles for above-the-fold content to improve LCP -->
+    <style>
+        /* Minimal critical CSS: header and layout */
+        header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid #ddd;position:sticky;top:0;background:#fff;z-index:1000}
+        header .logo{font-size:1.6rem;font-weight:bold}
+        .container{max-width:1200px;margin:0 auto;padding:0 1rem}
+        main{min-height:60vh}
+        @media (max-width:768px){header{padding:1rem}}
+    </style>
+    
+    <!-- Preload critical stylesheet to speed first meaningful paint -->
+    <link rel="preload" href="style.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="style.css"></noscript>
+    
+    <!-- Load minified CSS for production -->
+    <link rel="stylesheet" href="style.min.css">
+    
+    <!-- Post-specific CSS -->
+    <link rel="stylesheet" href="posts/style.css">
+    <link rel="stylesheet" href="posts/style.min.css">
+    
+    <script data-title="About Us – FineMagazi" src="head-loader.js"></script>
+    <script src="head-loader.min.js" defer></script>
+</head>
+<body>
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+
+    <header>
+        <div class="logo">FineMagazi</div>
+        <div id="nav-placeholder"></div>
+        <button id="dark-mode">🌙 Dark Mode</button>
+    </header>
+
+    <main class="container">
+        <article class="about-content">
+            <h1>About Us – FineMagazi</h1>
+
+            <h2>Welcome to FineMagazi — where financial wisdom meets real-world inspiration.</h2>
+
+            <p>We believe that money is not just numbers; rather, it is the feeling of freedom, choice, and the means to create the life that you love. FineMagazi was thus born with this simple mission: to make finance very simple, practical, and invigorating for anyone who is just starting on their journey to building their empire.</p>
+
+            <h2>Our Mission</h2>
+
+            <p>Our goal is to help readers from various corners of the world work toward their financial independence. We bring actionable insights on investing, personal finance, business trends, and wealth-growing strategies, all in a bid to help you make better money moves every day.</p>
+
+            <p>FineMagazi is not about complicated jargon or unrealistic promises; it is about real stories, proven strategies, and smart habits that translate ambition into achievements.</p>
+
+            <h2>What We Do</h2>
+
+            <p>We publish long-form articles, opinion pieces, and comprehensive guides that cover:</p>
+            <ul>
+                <li><strong>Investing & Wealth Building</strong> - Growing money in wise and sustainable ways.</li>
+                <li><strong>Entrepreneurship & Business Mindset</strong> - Learning from people who made it happen.</li>
+                <li><strong>Financial Independence</strong> - Tools, mindset shifts, and systems that allow your money to work for you.</li>
+                <li><strong>Global Insights</strong> - Dissecting market trends and financial events that shape our world.</li>
+            </ul>
+
+            <p>Our content strives to educate, empower, and inspire by merging data, research, and real-life experience to create content you can trust.</p>
+
+            <h2>Our Vision</h2>
+
+            <p>Become the international voice of financial expansion and independence. We want every reader to leave FineMagazi more self-assured, clear-headed, and spurred into taking that next step towards success.</p>
+
+            <p>Not just a magazine, we're a movement—and a movement for conscious and clever wealth building.</p>
+
+            <h2>Why Trust FineMagazi</h2>
+
+            <p>At FineMagazi, every article is created carefully through research and love for the truth. We value accuracy, verifiability, and authenticity above everything else.<br> Our writers analyze global financial trends, success stories, and timeless principles to create further impactful—not just clickable—content.</p>
+
+            <p>It is everything to us. Therefore, we promise to keep everything we publish transparent, honest, and forward-thinking.</p>
+
+            <p><strong>FineMagazi—Think smart. Grow rich. Live free.</strong></p>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Core JavaScript Files -->
+    <script src="shared-script.js"></script>
+    <script src="shared-script.min.js"></script>
+    <script src="script.js"></script>
+    <script src="script.min.js"></script>
+    
+    <!-- Post-specific JavaScript -->
+    <script src="posts/script.js"></script>
+    <script src="posts/script.min.js"></script>
+    <script src="posts/script.js.min.js"></script>
+    
+    <!-- Service Worker -->
+    <script src="service-worker.js"></script>
+    <script src="sw.js"></script>
+    
+    <!-- HrefLang Configuration -->
+    <script src="hreflang-config.js"></script>
+    <script src="hreflang-config.min.js"></script>
+</body>
+</html>
