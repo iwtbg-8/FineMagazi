@@ -43,20 +43,7 @@
     <script src="head-loader.min.js" defer></script>
 </head>
 <body>
-    <!-- Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then(function(registration) {
-                        console.log('ServiceWorker registration successful');
-                    })
-                    .catch(function(err) {
-                        console.log('ServiceWorker registration failed: ', err);
-                    });
-            });
-        }
-    </script>
+    <!-- Service worker is registered centrally in shared-script.js; avoid including SW files directly here -->
 
     <header>
         <div class="logo">FineMagazi</div>
@@ -120,9 +107,7 @@
     <script src="posts/script.min.js"></script>
     <script src="posts/script.js.min.js"></script>
     
-    <!-- Service Worker -->
-    <script src="service-worker.js"></script>
-    <script src="sw.js"></script>
+    <!-- Service worker files should not be included with <script> — registration happens in shared-script.js -->
     
     <!-- HrefLang Configuration -->
     <script src="hreflang-config.js"></script>

@@ -255,11 +255,4 @@ if (darkModeBtn) {
     });
 }
 
-// Register service worker for improved caching (non-blocking)
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('SW registered:', reg.scope))
-      .catch(err => console.warn('SW registration failed:', err));
-  });
-}
+// Service worker registration is handled centrally in shared-script.js

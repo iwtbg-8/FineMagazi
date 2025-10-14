@@ -336,9 +336,47 @@ if (darkModeBtn) {
 
 // Register service worker for improved caching (non-blocking)
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('SW registered:', reg.scope))
-      .catch(err => console.warn('SW registration failed:', err));
+  // Ensure we only register once and prefer the canonical '/service-worker.js'
+  window.addEventListener('load', async () => {
+    try {
+      // Unregister any legacy service worker scripts (like '/sw.js') that may cause conflicts
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      for (const r of registrations) {
+        if (r.active && (r.active.scriptURL.endsWith('/sw.js') || r.active.scriptURL.endsWith('/service-worker-legacy.js'))) {
+          try { await r.unregister(); console.log('Unregistered legacy service worker:', r.active.scriptURL); } catch (e) { /* ignore */ }
+        }
+      }
+
+      const registration = await navigator.serviceWorker.register('/service-worker.js');
+      console.log('SW registered:', registration.scope);
+
+      // Prompt the new worker to take control when available to reduce stale page issues on mobile
+      if (registration.waiting) {
+        // There's an updated worker waiting — instruct it to skipWaiting
+        registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+      }
+
+      // Listen for updates and notify when a new SW becomes active
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        if (!newWorker) return;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed') {
+            if (navigator.serviceWorker.controller) {
+              // New update available — ask it to skip waiting so clients can refresh
+              newWorker.postMessage({ type: 'SKIP_WAITING' });
+            }
+          }
+        });
+      });
+
+      // When the controlling worker changes, reload the page to get the latest content
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        console.log('Service worker controller changed — reloading to activate new SW');
+        window.location.reload();
+      });
+    } catch (err) {
+      console.warn('SW registration/update failed:', err);
+    }
   });
 }
